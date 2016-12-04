@@ -21,7 +21,7 @@ public class TheBall {
         ball = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
     }
 
-    public  void Update(){
+    public  void update(){
         x += speed;
         y += speed;
     }
@@ -42,5 +42,5 @@ public class TheBall {
     public float getSpeed() {
         return speed;
     }
-    
+
 }
