@@ -1,19 +1,34 @@
 package taynact.projetocm;
 
-import android.graphics.Bitmap;
-import android.support.v4.media.MediaMetadataCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity
+        implements View.OnClickListener{
+    @Override
+    public void onClick(View v) {
+        //cria um objeto do tipo intent
+        //passa o nome da atividade a iniciar ao clicar o botão 'start'
+        Intent i = new Intent(this, GameActivity.class);
+        //inicia a atividade
+        startActivity(i);
+        //encerra a atividade atual
+        finish();
+    }
 
-    //Bitmap img = Bitmap.createBitmap(@dra)
-
+    // Entrada do jogo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    //Here we set our UI layout as the view
         setContentView(R.layout.activity_main);
+
+        //cria referencia para o botão "start' na tela inicial
+        final Button buttonStart = (Button)findViewById(R.id.buttonStart);
+
+        buttonStart.setOnClickListener(this);
     }
 }
-
-
