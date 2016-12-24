@@ -3,11 +3,9 @@ package taynact.projetocm;
 import  android.app.Activity;
 import  android.os.Bundle;
 
-import taynact.projetocm.TDView;
-
 public  class GameActivity extends Activity{
 
-    TDView gameView;
+    GameView gameView;
 
     // This is where the "Play" button from HomeActivity sends us
     @Override
@@ -16,7 +14,7 @@ public  class GameActivity extends Activity{
 
         // Create an instance of our Tappy Defender View (TDView)
         // Also passing in "this" which is the Context of our app
-        gameView = new TDView(this);
+        gameView = new GameView(this);
         // Make our gameView the view for the Activity
         setContentView(gameView);
     }

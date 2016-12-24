@@ -11,7 +11,7 @@ import android.view.InflateException;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class  TDView extends SurfaceView implements Runnable{
+public class GameView extends SurfaceView implements Runnable{
 
     volatile boolean playing;
     Thread gameThread = null;
@@ -22,7 +22,8 @@ public class  TDView extends SurfaceView implements Runnable{
     private Canvas canvas;
     private SurfaceHolder ourHolder;
 
-    public TDView(Context context){
+    //construtor da classe GameView
+    public GameView(Context context){
         super(context);
 
         // Initialize our drawing objects
@@ -71,18 +72,18 @@ public class  TDView extends SurfaceView implements Runnable{
         }
     }
 
-    //jogo em pausa
-    public  void pause(){
+    //limpa o thread se o jogo interrompido ou o jogador saia da aplicação
+        public  void pause(){
         playing = false;
-
         try{
             gameThread.join();
-        }catch (InflateException e){
+        }catch (InterruptedException e){
 
         }
     }
 
-    public  void rsume(){
+    //cria um novo tread e o inicia
+    public  void resume(){
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
