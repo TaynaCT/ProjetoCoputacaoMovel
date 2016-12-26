@@ -3,10 +3,14 @@ package taynact.projetocm;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
+
+
 public class MainActivity extends Activity
-        /*implements View.OnClickListener*/{
+        implements View.OnClickListener{
+
     @Override
     public void onClick(View v) {
         //cria um objeto do tipo intent
@@ -31,4 +35,5 @@ public class MainActivity extends Activity
 
         buttonStart.setOnClickListener(this);
     }
+
 }
