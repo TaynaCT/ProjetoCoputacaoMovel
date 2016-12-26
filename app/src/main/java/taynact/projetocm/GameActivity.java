@@ -1,32 +1,33 @@
 package taynact.projetocm;
 
-import  android.app.Activity;
+import android.app.Activity;
 import  android.os.Bundle;
 
-public  class GameActivity extends Activity{
+public  class GameActivity extends  Activity{
 
-    GameView gameView;
+    private GameView gameView;
 
-    // This is where the "Play" button from HomeActivity sends us
+    //é para este codigo q somos levados quando clicamos em start
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Create an instance of our Tappy Defender View (TDView)
-        // Also passing in "this" which is the Context of our app
+    protected  void onCreate(Bundle saveInstanceState){
+        super.onCreate(saveInstanceState);
+        //cria instacia do gameView
+        //'this' é o Context da aaplicação
         gameView = new GameView(this);
-        // Make our gameView the view for the Activity
+        //passa o gameView para o view da atividade
         setContentView(gameView);
     }
-    // If the Activity is paused make sure to pause our thread
+
+    //se a atividade estiver em pausa, fazemos ter certeza q o thread tambem esta
     @Override
-    protected void onPause() {
+    protected  void onPause(){
         super.onPause();
         gameView.pause();
     }
-    // If the Activity is resumed make sure to resume our thread
+
+    //se a atividade for resumida, resume o thread
     @Override
-    protected void onResume() {
+    protected  void onResume(){
         super.onResume();
         gameView.resume();
     }
