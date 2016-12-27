@@ -33,9 +33,9 @@ public class Base {
 
             case 1://desenha a bassa vermelha no canto inferior direito da tela
 
-                barBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.baseblue);
+                barBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.basered);
                 x = screenLimit.x - barBitmap.getWidth();
-                y = screenLimit.y - barBitmap.getHeight();
+                y = screenLimit.y - barBitmap.getHeight() - 5;
 
                 break;
 
@@ -43,11 +43,11 @@ public class Base {
     }
 
     public  void update(){
-       
+
     }
 
     //Getters
-    public Bitmap getBall() {
+    public Bitmap getBarBitmap() {
         return barBitmap;
     }
 

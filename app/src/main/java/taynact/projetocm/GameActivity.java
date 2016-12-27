@@ -24,7 +24,7 @@ public  class GameActivity extends  Activity{
 
         //cria instacia do gameView
         //'this' é o Context da aaplicação
-        gameView = new GameView(this);
+        gameView = new GameView(this, size);
         //passa o gameView para o view da atividade
         setContentView(gameView);
     }

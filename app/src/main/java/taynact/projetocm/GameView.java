@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -13,18 +14,23 @@ public class GameView extends SurfaceView implements Runnable{
     Thread gameThread = null;
     //bola
     private  TheBall ball;
+    //barras
+    private Base blueBase;
+    private Base redBase;
     //objetos para desenar o bitmap na tela
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
 
     //construtor
-    public GameView(Context context) {
+    public GameView(Context context, Point screenLimit) {
         super(context);
 
         ourHolder = getHolder();
         paint = new Paint();
         ball = new TheBall(context);
+        blueBase = new Base(context, 0, screenLimit);
+        redBase = new Base(context, 1, screenLimit);
     }
 
     @Override
@@ -39,6 +45,8 @@ public class GameView extends SurfaceView implements Runnable{
     private void update(){
 
         ball.update();
+        blueBase.update();
+        redBase.update();
 
     }
     private void draw(){
@@ -57,6 +65,20 @@ public class GameView extends SurfaceView implements Runnable{
                     ball.getBall(),
                     ball.getX(),
                     ball.getY(),
+                    paint);
+
+            //desenha a barra azul
+            canvas.drawBitmap(
+                    blueBase.getBarBitmap(),
+                    blueBase.getX(),
+                    blueBase.getY(),
+                    paint);
+
+            //desenha barra vermelha
+            canvas.drawBitmap(
+                    redBase.getBarBitmap(),
+                    redBase.getX(),
+                    redBase.getY(),
                     paint);
 
             // Unlock and draw the scene
