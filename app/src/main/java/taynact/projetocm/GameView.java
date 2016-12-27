@@ -67,6 +67,7 @@ public class GameView extends SurfaceView implements Runnable{
     private void control(){
 
         //controla o frame rate
+        //pausamos o thread po 17 milisegundos(1000milisegundos/ 60(fps))
         try {
             gameThread.sleep(17);
         } catch (InterruptedException e) {
