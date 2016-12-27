@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -116,6 +117,24 @@ public class GameView extends SurfaceView implements Runnable{
         gameThread.start();
     }
 
+    //AQUI É QUE DEVE SER COLOCADO O CODIGO RELACIONADO AO MOVIMENTO
+    // SurfaceView allows us to handle the onTouchEvent
+   /* @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
 
 
+        // There are many different events in MotionEvent
+        // We care about just 2 - for now.
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            // Has the player lifted their finger up?
+            case MotionEvent.ACTION_UP:
+                // Do something here
+                break;
+            // Has the player touched the screen?
+            case MotionEvent.ACTION_DOWN:
+                // Do something here
+                break;
+        }
+        return true;
+    }*/
 }
