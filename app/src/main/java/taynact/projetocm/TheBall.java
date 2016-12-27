@@ -10,20 +10,20 @@ public class TheBall {
 
     private Bitmap ball;
     private  float x, y;
-    private  float speed;
+    private  float speed = 0;
 
     //construtor
     public TheBall(Context context){
-        x = 50;
-        y = 50;
+        x = 10;
+        y = 10;
         speed = 1.5f;
 
         ball = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
     }
 
     public  void update(){
-        x += speed;
-        y += speed;
+        x ++;
+        y ++;
     }
 
     //Getters
