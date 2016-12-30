@@ -3,10 +3,10 @@ package taynact.projetocm;
 /**
  * Created by lobix7 on 30/12/2016.
  */
-/*
+
 import android.view.Display;
 
-public Colisions {
+public class Colisions {
 
     public boolean objectcolision(TheBall ball, Base base)
     {
@@ -38,4 +38,3 @@ public Colisions {
         } else return false;
     }
 }
-*/
