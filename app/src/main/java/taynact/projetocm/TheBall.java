@@ -19,6 +19,7 @@ public class TheBall {
         speed = 1.5f;
 
         ball = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
+
     }
 
     public  void update(){

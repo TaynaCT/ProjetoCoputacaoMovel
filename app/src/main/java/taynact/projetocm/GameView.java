@@ -13,12 +13,20 @@ public class GameView extends SurfaceView implements Runnable{
 
     volatile boolean playing;
     Thread gameThread = null;
+
     //bola
     private  TheBall ball;
+
     //barras
     private Base blueBase;
     private Base redBase;
-    //objetos para desenar o bitmap na tela
+
+    //asteroides
+    private  Asteroids asteroid1;
+    private  Asteroids asteroid2;
+    private  Asteroids asteroid3;
+
+    //objetos para desenar os bitmap na tela
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
@@ -32,6 +40,9 @@ public class GameView extends SurfaceView implements Runnable{
         ball = new TheBall(context);
         blueBase = new Base(context, 0, screenLimit);
         redBase = new Base(context, 1, screenLimit);
+        asteroid1 = new Asteroids(context, screenLimit);
+        asteroid2 = new Asteroids(context, screenLimit);
+        asteroid3 = new Asteroids(context, screenLimit);
     }
 
     @Override
@@ -48,8 +59,11 @@ public class GameView extends SurfaceView implements Runnable{
         ball.update();
         blueBase.update();
         redBase.update();
-
+        asteroid1.update();
+        asteroid2.update();
+        asteroid3.update();
     }
+
     private void draw(){
 
         // o SurfaceHolder é valido?
@@ -80,6 +94,25 @@ public class GameView extends SurfaceView implements Runnable{
                     redBase.getBarBitmap(),
                     redBase.getX(),
                     redBase.getY(),
+                    paint);
+
+            //desenha os asteroides
+            canvas.drawBitmap(
+                    asteroid1.getAsteroidBitmap(),
+                    asteroid1.getX(),
+                    asteroid1.getY(),
+                    paint);
+
+            canvas.drawBitmap(
+                    asteroid2.getAsteroidBitmap(),
+                    asteroid2.getX(),
+                    asteroid2.getY(),
+                    paint);
+
+            canvas.drawBitmap(
+                    asteroid3.getAsteroidBitmap(),
+                    asteroid3.getX(),
+                    asteroid3.getY(),
                     paint);
 
             // Unlock and draw the scene
