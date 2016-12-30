@@ -28,7 +28,7 @@ public class GameView extends SurfaceView implements Runnable{
     private Asteroids asteroid3;
 
     //detector de colisões
-    private Colisions colisions;
+    //private Colisions colisions;
 
     // objetos para desenar o bitmap na tela
     private Paint paint;
@@ -47,7 +47,7 @@ public class GameView extends SurfaceView implements Runnable{
         asteroid1 = new Asteroids(context, screenLimit);
         asteroid2 = new Asteroids(context, screenLimit);
         asteroid3 = new Asteroids(context, screenLimit);
-        colisions = new Colisions();
+
     }
 
     @Override
@@ -67,14 +67,14 @@ public class GameView extends SurfaceView implements Runnable{
         asteroid1.update();
         asteroid2.update();
         asteroid3.update();
-
+/*
         colisions.objectcolision(ball, blueBase);
         colisions.objectcolision(ball, redBase);
         colisions.sidescolision(ball, gameView);
         colisions.asteroidcolision(ball, asteroid1);
         colisions.asteroidcolision(ball, asteroid2);
         colisions.asteroidcolision(ball, asteroid3);
-
+*/
     }
     private void draw(){
 
