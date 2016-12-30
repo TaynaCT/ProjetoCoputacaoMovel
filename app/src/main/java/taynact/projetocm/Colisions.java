@@ -8,10 +8,6 @@ import android.view.Display;
 
 public class Colisions {
 
-    public  Colisions(){
-
-    }
-
     public boolean objectcolision(TheBall ball, Base base)
     {
 
