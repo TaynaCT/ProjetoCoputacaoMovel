@@ -11,6 +11,8 @@ import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements Runnable{
 
+    private GameView gameView;
+
     volatile boolean playing;
     Thread gameThread = null;
     //bola
@@ -18,7 +20,9 @@ public class GameView extends SurfaceView implements Runnable{
     //barras
     private Base blueBase;
     private Base redBase;
-    //objetos para desenar o bitmap na tela
+    //detector de colisões
+    private Colisions colisions;
+    // objetos para desenar o bitmap na tela
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
@@ -48,6 +52,10 @@ public class GameView extends SurfaceView implements Runnable{
         ball.update();
         blueBase.update();
         redBase.update();
+        colisions.objectcolision(ball, blueBase);
+        colisions.objectcolision(ball, redBase);
+        colisions.sidescolision(ball, gameView);
+
 
     }
     private void draw(){
