@@ -117,6 +117,7 @@ public class GameView extends SurfaceView implements Runnable{
         gameThread.start();
     }
 
+
     //AQUI É QUE DEVE SER COLOCADO O CODIGO RELACIONADO AO MOVIMENTO
     // SurfaceView allows us to handle the onTouchEvent
    /* @Override
