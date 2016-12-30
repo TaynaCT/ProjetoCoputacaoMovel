@@ -27,4 +27,14 @@ public class Colisions {
         }
         else return false;
     }
+
+    public boolean asteroidcolision(TheBall ball, Asteroids asteroids) {
+        if (ball.getX() < asteroids.getX() + asteroids.getAsteroidBitmap().getWidth() &&
+                ball.getX() + ball.getBall().getWidth() > asteroids.getX() &&
+                ball.getY() < asteroids.getY() + asteroids.getAsteroidBitmap().getHeight() &&
+                ball.getBall().getHeight() + ball.getY() > asteroids.getY())
+        {
+            return true;
+        } else return false;
+    }
 }

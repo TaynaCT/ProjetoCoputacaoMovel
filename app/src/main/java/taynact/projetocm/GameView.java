@@ -55,8 +55,11 @@ public class GameView extends SurfaceView implements Runnable{
         colisions.objectcolision(ball, blueBase);
         colisions.objectcolision(ball, redBase);
         colisions.sidescolision(ball, gameView);
-
-
+        //colisions.asteroidcolision(ball, rock01);
+        //colisions.asteroidcolision(ball, rock02);
+        //colisions.asteroidcolision(ball, rock03);
+        //colisions.asteroidcolision(ball, rock04);
+        //colisions.asteroidcolision(ball, rock05);
     }
     private void draw(){
 
