@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
+
 import java.util.Random;
 
 //Classe responsavel pelos Asteroids

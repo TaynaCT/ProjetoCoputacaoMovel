@@ -5,6 +5,7 @@ import android.graphics.Point;
 import  android.os.Bundle;
 import android.view.Display;
 
+
 public  class GameActivity extends  Activity{
 
     private GameView gameView;
