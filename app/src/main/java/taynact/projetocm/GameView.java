@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 public class GameView extends SurfaceView implements Runnable{
 
     private GameView gameView;
@@ -27,6 +29,9 @@ public class GameView extends SurfaceView implements Runnable{
     private Asteroids asteroid2;
     private Asteroids asteroid3;
 
+    //strelas background
+    private ArrayList<Stars> starList = new ArrayList<Stars>();
+
     //detector de colisões
     //private Colisions colisions;
 
@@ -38,6 +43,15 @@ public class GameView extends SurfaceView implements Runnable{
     //construtor
     public GameView(Context context, Point screenLimit) {
         super(context);
+
+        //numero de estrelas a gerar
+        int numStars = 10;
+
+        //cira obijetos da classe Stars e adiciona a lista de estrelas
+        for(int i = 0; i < numStars; i++){
+            Stars star = new Stars(context, screenLimit);
+            starList.add(star);
+        }
 
         ourHolder = getHolder();
         paint = new Paint();
@@ -61,12 +75,18 @@ public class GameView extends SurfaceView implements Runnable{
 
     private void update(){
 
+        for (Stars s : starList){
+            s.update();
+        }
+
         ball.update();
         blueBase.update();
         redBase.update();
         asteroid1.update();
         asteroid2.update();
         asteroid3.update();
+
+
 /*
         colisions.objectcolision(ball, blueBase);
         colisions.objectcolision(ball, redBase);
@@ -86,6 +106,14 @@ public class GameView extends SurfaceView implements Runnable{
 
             // limpa a ultima frame
             canvas.drawColor(Color.argb(255, 0, 0, 0));
+
+            //desenha as estrelas
+            for (Stars s : starList){
+                canvas.drawBitmap(s.getStarBitmap(),
+                        s.getX(),
+                        s.getY(),
+                        paint);
+            }
 
             //desenha a bola
             canvas.drawBitmap(
