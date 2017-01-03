@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -13,12 +14,20 @@ import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements Runnable{
 
+    private Context context;
     private GameView gameView;
 
     volatile boolean playing;
     Thread gameThread = null;
     //bola
     private  TheBall ball;
+
+    //variaveis de pontuação
+    private int pts;
+    private int timeStarted;
+
+    //colisões
+    Colisions colisions;
 
     //barras
     private Base blueBase;
@@ -39,10 +48,23 @@ public class GameView extends SurfaceView implements Runnable{
     private Paint paint;
     private Canvas canvas;
     private SurfaceHolder ourHolder;
+    private Point screenLimit;
+
+    //fim de jogo
+    private  boolean gameOver;
 
     //construtor
     public GameView(Context context, Point screenLimit) {
         super(context);
+        this.context = context;
+        this.screenLimit = screenLimit;
+
+        startGame();
+
+    }
+
+    //Inicia as variaveis de jogo
+    public void  startGame(){
 
         //numero de estrelas a gerar
         int numStars = 10;
@@ -55,6 +77,7 @@ public class GameView extends SurfaceView implements Runnable{
 
         ourHolder = getHolder();
         paint = new Paint();
+        paint = new Paint();
         ball = new TheBall(context);
         blueBase = new Base(context, 0, screenLimit);
         redBase = new Base(context, 1, screenLimit);
@@ -62,6 +85,11 @@ public class GameView extends SurfaceView implements Runnable{
         asteroid2 = new Asteroids(context, screenLimit);
         asteroid3 = new Asteroids(context, screenLimit);
 
+        pts = 0;
+        //pega o tempo do sistema em minisegundos
+        timeStarted = (int)System.currentTimeMillis();
+
+        gameOver = false;
     }
 
     @Override
@@ -86,15 +114,19 @@ public class GameView extends SurfaceView implements Runnable{
         asteroid2.update();
         asteroid3.update();
 
-
-/*
-        colisions.objectcolision(ball, blueBase);
-        colisions.objectcolision(ball, redBase);
-        colisions.sidescolision(ball, gameView);
-        colisions.asteroidcolision(ball, asteroid1);
-        colisions.asteroidcolision(ball, asteroid2);
-        colisions.asteroidcolision(ball, asteroid3);
+        //teste de colisões
+        /*
+        ball.setIscolliding(colisions.objectcolision(ball, blueBase));
+        ball.setIscolliding(colisions.objectcolision(ball, redBase));
+        ball.setIscolliding(colisions.asteroidcolision(ball, asteroid1));
+        ball.setIscolliding(colisions.asteroidcolision(ball, asteroid2));
+        ball.setIscolliding(colisions.asteroidcolision(ball, asteroid3));
 */
+
+        if(!gameOver){
+            pts ++; //(int)System.currentTimeMillis() - timeStarted;
+        }
+
     }
     private void draw(){
 
@@ -155,6 +187,11 @@ public class GameView extends SurfaceView implements Runnable{
                     asteroid3.getY(),
                     paint);
 
+            //texto
+            paint.setTextAlign(Paint.Align.LEFT);
+            paint.setColor(Color.argb(255, 255, 255, 255));
+            paint.setTextSize(25);
+            canvas.drawText("PTS: " + System.currentTimeMillis()/*ball.getIsColliding()*/, 10, 20, paint);
 
             // Unlock and draw the scene
             ourHolder.unlockCanvasAndPost(canvas);

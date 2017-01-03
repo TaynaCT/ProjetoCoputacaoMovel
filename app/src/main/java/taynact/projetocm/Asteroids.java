@@ -33,26 +33,22 @@ public class Asteroids {
                 break;
 
             case 1:
-
                 asteroidBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.rock02);
 
                 break;
 
 
             case 2:
-
                 asteroidBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.rock03);
 
                 break;
 
             case 3:
-
                 asteroidBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.rock04);
 
                 break;
 
             case 4:
-
                 asteroidBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.rock05);
 
                 break;

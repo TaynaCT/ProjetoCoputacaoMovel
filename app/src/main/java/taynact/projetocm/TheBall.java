@@ -11,6 +11,7 @@ public class TheBall {
     private Bitmap ball;
     private  float x, y;
     private  float speed = 0;
+    private  boolean isColiding;
 
     //construtor
     public TheBall(Context context){
@@ -20,6 +21,7 @@ public class TheBall {
 
         ball = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
 
+        isColiding = true;
     }
 
     public  void update(){
@@ -42,6 +44,15 @@ public class TheBall {
 
     public float getSpeed() {
         return speed;
+    }
+
+    public boolean getIsColliding(){
+        return isColiding;
+    }
+
+    //set
+    public void setIscolliding(boolean collisionState){
+        isColiding = collisionState;
     }
 
 }
