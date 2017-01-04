@@ -114,13 +114,16 @@ public class GameView extends SurfaceView implements Runnable{
         asteroid2.update();
         asteroid3.update();
 
-        //teste de colisões
+        //Se a bola sai da tela
+        if(ball.getY() > screenLimit.y || ball.getY() < 0){
+            //game over
+            gameOver = true;
+        }
 
-
-
-
+        //enquanto não é game over
         if(!gameOver){
-            pts ++; //(int)System.currentTimeMillis() - timeStarted;
+            //faz contagem dos pontos
+            pts = (int)System.currentTimeMillis() - timeStarted;
         }
 
     }
@@ -184,11 +187,22 @@ public class GameView extends SurfaceView implements Runnable{
                     paint);
 
             //texto
-            paint.setTextAlign(Paint.Align.LEFT);
-            paint.setColor(Color.argb(255, 255, 255, 255));
-            paint.setTextSize(25);
-            canvas.drawText("PTS: " + System.currentTimeMillis()/*ball.getIsColliding()*/, 10, 20, paint);
+            if(!gameOver) {
+                paint.setTextAlign(Paint.Align.LEFT);
+                paint.setColor(Color.argb(255, 255, 255, 255));
+                paint.setTextSize(25);
+                canvas.drawText("PTS: " + pts, 10, 20, paint);
+            } else{
+                //Quando o jogo acabar
+                paint.setTextSize(80);
+                paint.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText("Game Over", screenLimit.x/2, 100, paint);
+                paint.setTextSize(25);
+                canvas.drawText("PTS: " + pts, screenLimit.x/2, 160, paint);
 
+                paint.setTextSize(80);
+                canvas.drawText("Tap to Replay!", screenLimit.x/2, 350, paint);
+            }
             // Unlock and draw the scene
             ourHolder.unlockCanvasAndPost(canvas);
         }
@@ -224,25 +238,27 @@ public class GameView extends SurfaceView implements Runnable{
         gameThread.start();
     }
 
-
-    //AQUI É QUE DEVE SER COLOCADO O CODIGO RELACIONADO AO MOVIMENTO
+    //INPUTS
     // SurfaceView allows us to handle the onTouchEvent
-   /* @Override
+    @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-
-
-        // There are many different events in MotionEvent
+        // Diferentes tipos de evento de toque
         // We care about just 2 - for now.
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             // Has the player lifted their finger up?
             case MotionEvent.ACTION_UP:
                 // Do something here
                 break;
-            // Has the player touched the screen?
+            // O jogador tocou a tela¹
             case MotionEvent.ACTION_DOWN:
-                // Do something here
+                // caso seja fim de jogo
+                if(gameOver){
+                    //reinicia o jogo
+                    startGame();
+                }
                 break;
+
         }
         return true;
-    }*/
+    }
 }
