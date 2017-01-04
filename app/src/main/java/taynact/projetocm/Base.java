@@ -17,6 +17,7 @@ public class Base {
     private  int selectBar;
     private Rect hitbox;
 
+
     //construtor
     public Base(Context context, int bar, Point screenLimit){
 
@@ -74,5 +75,6 @@ public class Base {
     }
 
     public Rect getHitbox(){  return hitbox; }
+
 
 }

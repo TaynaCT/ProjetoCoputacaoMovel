@@ -26,6 +26,7 @@ public class GameView extends SurfaceView implements Runnable{
     //variaveis de pontuação
     private int pts;
     private int timeStarted;
+    private int touch = 1;
 
     //variaveis das colisões
 
@@ -105,7 +106,7 @@ public class GameView extends SurfaceView implements Runnable{
     private void update(){
 
         Point lastposition = new Point((int)ball.getX(), (int)ball.getY());
-
+        int pts10 = 0;
         // Collision detection on new positions
         // Before move because we are testing last frames
         // position which has just been drawn
@@ -114,49 +115,160 @@ public class GameView extends SurfaceView implements Runnable{
         if(Rect.intersects(blueBase.getHitbox(), ball.getHitbox()))
         {
             //o que fazer ao bater
-            ball.setX(lastposition.x);
-            ball.setX(lastposition.y);
+            if (touch == 0)
+            {pts10 = 10;};
 
+            if  (ball.getHitbox().right == blueBase.getHitbox().left);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().left == blueBase.getHitbox().right);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().top == blueBase.getHitbox().bottom);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().bottom == blueBase.getHitbox().top);
+            {
+
+
+            }
+
+            touch = 1;
 
         }
         if(Rect.intersects  (redBase.getHitbox(), ball.getHitbox()))
         {
             //o que fazer ao bater
-            ball.setX(lastposition.x);
-            ball.setX(lastposition.y);
+            if (touch == 1)
+            {pts10 = 10;};
 
+            if  (ball.getHitbox().right == redBase.getHitbox().left);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().left == redBase.getHitbox().right);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().top == redBase.getHitbox().bottom);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().bottom == redBase.getHitbox().top);
+            {
+
+
+            }
+
+            touch = 0;
         }
 
         if(Rect.intersects  (ball.getHitbox(), asteroid1.getHitbox()))
         {
             //o que fazer ao bater
-            ball.setX(lastposition.x);
-            ball.setX(lastposition.y);
+            if  (ball.getHitbox().right == asteroid1.getHitbox().left);
+            {
 
+
+            }
+
+            if  (ball.getHitbox().left == asteroid1.getHitbox().right);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().top == asteroid1.getHitbox().bottom);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().bottom == asteroid1.getHitbox().top);
+            {
+
+
+            }
         }
 
         if(Rect.intersects  (ball.getHitbox(), asteroid2.getHitbox()))
         {
             //o que fazer ao bater
-            ball.setX(lastposition.x);
-            ball.setX(lastposition.y);
+            if  (ball.getHitbox().right == asteroid2.getHitbox().left);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().left == asteroid2.getHitbox().right);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().top == asteroid2.getHitbox().bottom);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().bottom == asteroid2.getHitbox().top);
+            {
+
+
+            }
 
         }
 
         if(Rect.intersects  (ball.getHitbox(), asteroid3.getHitbox()))
         {
             //o que fazer ao bater
-            ball.setX(lastposition.x);
-            ball.setX(lastposition.y);
+            if  (ball.getHitbox().right == asteroid3.getHitbox().left);
+            {
 
+
+            }
+
+            if  (ball.getHitbox().left == asteroid3.getHitbox().right);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().top == asteroid3.getHitbox().bottom);
+            {
+
+
+            }
+
+            if  (ball.getHitbox().bottom == asteroid3.getHitbox().top);
+            {
+
+
+            }
         }
 
         //
-        if(ball.getX() > screenLimit.x)
+        if(ball.getX() + ball.getBall().getWidth() > screenLimit.x)
         {
             //o que fazer ao bater
             ball.setX(lastposition.x);
-            ball.setX(lastposition.y);
+            ball.setY(lastposition.y);
 
 
         }
@@ -165,13 +277,12 @@ public class GameView extends SurfaceView implements Runnable{
         {
             //o que fazer ao bater
             ball.setX(lastposition.x);
-            ball.setX(lastposition.y);
+            ball.setY(lastposition.y);
 
 
         }
 
-
-
+        
         for (Stars s : starList){
             s.update();
         }
@@ -192,7 +303,7 @@ public class GameView extends SurfaceView implements Runnable{
         //enquanto não é game over
         if(!gameOver){
             //faz contagem dos pontos
-            pts = (int)System.currentTimeMillis() - timeStarted;
+            pts = (int)System.currentTimeMillis() - timeStarted + pts10;
         }
 
     }
