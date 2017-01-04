@@ -9,7 +9,7 @@ import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
+import android.graphics.Rect;
 import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements Runnable{
@@ -19,6 +19,7 @@ public class GameView extends SurfaceView implements Runnable{
 
     volatile boolean playing;
     Thread gameThread = null;
+
     //bola
     private  TheBall ball;
 
@@ -26,8 +27,8 @@ public class GameView extends SurfaceView implements Runnable{
     private int pts;
     private int timeStarted;
 
-    //colisões
-    Colisions colisions;
+    //variaveis das colisões
+
 
     //barras
     private Base blueBase;
@@ -102,6 +103,74 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     private void update(){
+
+        Point lastposition = new Point((int)ball.getX(), (int)ball.getY());
+
+        // Collision detection on new positions
+        // Before move because we are testing last frames
+        // position which has just been drawn
+        // If you are using images in excess of 100 pixels
+        // wide then increase the -100 value accordingly
+        if(Rect.intersects(blueBase.getHitbox(), ball.getHitbox()))
+        {
+            //o que fazer ao bater
+            ball.setX(lastposition.x);
+            ball.setX(lastposition.y);
+
+
+        }
+        if(Rect.intersects  (redBase.getHitbox(), ball.getHitbox()))
+        {
+            //o que fazer ao bater
+            ball.setX(lastposition.x);
+            ball.setX(lastposition.y);
+
+        }
+
+        if(Rect.intersects  (ball.getHitbox(), asteroid1.getHitbox()))
+        {
+            //o que fazer ao bater
+            ball.setX(lastposition.x);
+            ball.setX(lastposition.y);
+
+        }
+
+        if(Rect.intersects  (ball.getHitbox(), asteroid2.getHitbox()))
+        {
+            //o que fazer ao bater
+            ball.setX(lastposition.x);
+            ball.setX(lastposition.y);
+
+        }
+
+        if(Rect.intersects  (ball.getHitbox(), asteroid3.getHitbox()))
+        {
+            //o que fazer ao bater
+            ball.setX(lastposition.x);
+            ball.setX(lastposition.y);
+
+        }
+
+        //
+        if(ball.getX() > screenLimit.x)
+        {
+            //o que fazer ao bater
+            ball.setX(lastposition.x);
+            ball.setX(lastposition.y);
+
+
+        }
+
+        if(ball.getX() < 0)
+        {
+            //o que fazer ao bater
+            ball.setX(lastposition.x);
+            ball.setX(lastposition.y);
+
+
+        }
+
+
 
         for (Stars s : starList){
             s.update();
