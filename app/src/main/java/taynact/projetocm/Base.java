@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 //Classe responsavel pelas barras
 
@@ -14,6 +15,7 @@ public class Base {
     private  float x, y;
     private  float speed = 0;
     private  int selectBar;
+    private Rect hitbox;
 
     //construtor
     public Base(Context context, int bar, Point screenLimit){
@@ -40,10 +42,18 @@ public class Base {
                 break;
 
         }
+
+        // Initialize the hit box
+        hitbox = new Rect ((int)x, (int)y, barBitmap.getWidth(), barBitmap.getHeight());
     }
 
     public  void update(){
 
+        //Refresh hit box location
+        hitbox.left = (int)x;
+        hitbox.top = (int)y;
+        hitbox.right = (int)x + barBitmap.getWidth();
+        hitbox.bottom = (int)y + barBitmap.getHeight();
     }
 
     //Getters
@@ -62,5 +72,7 @@ public class Base {
     public float getSpeed() {
         return speed;
     }
+
+    public Rect getHitbox(){  return hitbox; }
 
 }

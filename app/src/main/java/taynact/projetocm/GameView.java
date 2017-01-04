@@ -115,13 +115,9 @@ public class GameView extends SurfaceView implements Runnable{
         asteroid3.update();
 
         //teste de colisões
-        /*
-        ball.setIscolliding(colisions.objectcolision(ball, blueBase));
-        ball.setIscolliding(colisions.objectcolision(ball, redBase));
-        ball.setIscolliding(colisions.asteroidcolision(ball, asteroid1));
-        ball.setIscolliding(colisions.asteroidcolision(ball, asteroid2));
-        ball.setIscolliding(colisions.asteroidcolision(ball, asteroid3));
-*/
+
+
+
 
         if(!gameOver){
             pts ++; //(int)System.currentTimeMillis() - timeStarted;
