@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 
 import java.util.Random;
@@ -16,6 +17,7 @@ public class Asteroids {
     private  float x, y;
     private  int maxX, maxY, minX, minY;
     private  float speed = 0;
+    private Rect hitbox;
 
     //construtor
     public Asteroids(Context context, Point screenLimit){
@@ -68,6 +70,8 @@ public class Asteroids {
         // gera posições aleatorias no eixo de y que vão de 0 - ao tamanha da tela - a altura do bitmap
         y = generator.nextInt(maxY) - asteroidBitmap.getHeight();
 
+        // Initialize the hit box
+        hitbox = new Rect ((int)x, (int)y, asteroidBitmap.getWidth(), asteroidBitmap.getHeight());
     }
 
     public  void update(){
@@ -85,6 +89,11 @@ public class Asteroids {
             y = generator.nextInt(maxY) - asteroidBitmap.getHeight();
         }
 
+        //Refresh hit box location
+        hitbox.left = (int)x;
+        hitbox.top = (int)y;
+        hitbox.right = (int)x + asteroidBitmap.getWidth();
+        hitbox.bottom = (int)y + asteroidBitmap.getHeight();
     }
 
     //Getters
@@ -103,5 +112,7 @@ public class Asteroids {
     public float getSpeed() {
         return speed;
     }
+
+    public Rect getHitbox(){  return hitbox; }
 
 }
