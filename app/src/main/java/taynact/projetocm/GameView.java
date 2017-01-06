@@ -38,9 +38,6 @@ public class GameView extends SurfaceView implements Runnable{
     //strelas background
     private ArrayList<Stars> starList = new ArrayList<Stars>();
 
-    //detector de colisões
-    //private Colisions colisions;
-
     // objetos para desenar o bitmap na tela
     private Paint paint;
     private Canvas canvas;
@@ -65,6 +62,7 @@ public class GameView extends SurfaceView implements Runnable{
 
         //numero de estrelas a gerar
         int numStars = 10;
+        asteroids = new Asteroids[3];
 
         //cira obijetos da classe Stars e adiciona a lista de estrelas
         for(int i = 0; i < numStars; i++){
