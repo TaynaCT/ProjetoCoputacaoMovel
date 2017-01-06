@@ -5,20 +5,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
+import java.util.Random;
+
 //Classe responsavel por desenhar a bola e guardar as informações relativas ao objeto
 
 public class TheBall {
 
     private Bitmap ball;
     private  float x, y;
-    private  float speed = 0;
+    private float xVelocity;
+    private float yVelocity;
+
     private Rect hitbox;
 
     //construtor
     public TheBall(Context context){
         x = 10;
         y = 10;
-        speed = 1.5f;
+        xVelocity = 5;
+        yVelocity = 5.5f;
 
         ball = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
 
@@ -27,8 +32,8 @@ public class TheBall {
     }
 
     public  void update(){
-        x ++;
-        y ++;
+        x += xVelocity;
+        y += yVelocity;
 
         //Refresh hit box location
         hitbox.left = (int)x;
@@ -46,19 +51,31 @@ public class TheBall {
         return x;
     }
 
-    public void setX(int x) {  this.x = x; }
-
     public float getY() {
         return y;
     }
 
-    public void setY(int y) {  this.y = y; }
+    public void setX(int x) {  this.x = x; }
 
-    public float getSpeed() {
-        return speed;
-    }
+    public void setY(int y) {  this.y = y; }
 
     public Rect getHitbox(){  return hitbox; }
 
+    public void reverseXVelocity(){
+        xVelocity = -xVelocity;
+    }
+
+    public  void  reverseYVelocity(){
+        yVelocity = -yVelocity;
+    }
+    //gera velocidade aleatoria no caso impacto com as barras
+    public void setRandomVelocity(){
+        Random rand = new Random();
+        int newVelocity = rand.nextInt(2);
+
+        if (newVelocity == 0){
+            reverseXVelocity();
+        }
+    }
 
 }

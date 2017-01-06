@@ -28,17 +28,12 @@ public class GameView extends SurfaceView implements Runnable{
     private int timeStarted;
     private int touch = 1;
 
-    //variaveis das colisões
-
-
     //barras
     private Base blueBase;
     private Base redBase;
 
     //asteroides
-    private Asteroids asteroid1;
-    private Asteroids asteroid2;
-    private Asteroids asteroid3;
+    private Asteroids[] asteroids;
 
     //strelas background
     private ArrayList<Stars> starList = new ArrayList<Stars>();
@@ -83,9 +78,11 @@ public class GameView extends SurfaceView implements Runnable{
         ball = new TheBall(context);
         blueBase = new Base(context, 0, screenLimit);
         redBase = new Base(context, 1, screenLimit);
-        asteroid1 = new Asteroids(context, screenLimit);
-        asteroid2 = new Asteroids(context, screenLimit);
-        asteroid3 = new Asteroids(context, screenLimit);
+
+        //inicia os asteroides
+        for (int i = 0; i < asteroids.length; i ++){
+            asteroids[i] = new Asteroids(context, screenLimit);
+        }
 
         pts = 0;
         //pega o tempo do sistema em minisegundos
@@ -115,69 +112,25 @@ public class GameView extends SurfaceView implements Runnable{
         if(Rect.intersects(blueBase.getHitbox(), ball.getHitbox()))
         {
             //o que fazer ao bater
-            if (touch == 0)
-            {pts10 = 10;};
-
-            if  (ball.getHitbox().right == blueBase.getHitbox().left);
-            {
-
-
+            if (touch == 0){
+                pts10 = 10;
             }
-
-            if  (ball.getHitbox().left == blueBase.getHitbox().right);
-            {
-
-
-            }
-
-            if  (ball.getHitbox().top == blueBase.getHitbox().bottom);
-            {
-
-
-            }
-
-            if  (ball.getHitbox().bottom == blueBase.getHitbox().top);
-            {
-
-
-            }
-
+            ball.setRandomVelocity();
+            ball.reverseYVelocity();
             touch = 1;
 
         }
         if(Rect.intersects  (redBase.getHitbox(), ball.getHitbox()))
         {
             //o que fazer ao bater
-            if (touch == 1)
-            {pts10 = 10;};
-
-            if  (ball.getHitbox().right == redBase.getHitbox().left);
-            {
-
-
+            if (touch == 1){
+                pts10 = 10;
             }
-
-            if  (ball.getHitbox().left == redBase.getHitbox().right);
-            {
-
-
-            }
-
-            if  (ball.getHitbox().top == redBase.getHitbox().bottom);
-            {
-
-
-            }
-
-            if  (ball.getHitbox().bottom == redBase.getHitbox().top);
-            {
-
-
-            }
-
+            ball.setRandomVelocity();
+            ball.reverseYVelocity();
             touch = 0;
         }
-
+/*
         if(Rect.intersects  (ball.getHitbox(), asteroid1.getHitbox()))
         {
             //o que fazer ao bater
@@ -262,40 +215,31 @@ public class GameView extends SurfaceView implements Runnable{
 
             }
         }
+*/
 
-        //
-        if(ball.getX() + ball.getBall().getWidth() > screenLimit.x)
-        {
-            //o que fazer ao bater
-            ball.setX(lastposition.x);
-            ball.setY(lastposition.y);
-
-
+        //se a bola atingir oas lados da tela
+        if(ball.getHitbox().left < 0){
+            ball.reverseXVelocity();
         }
 
-        if(ball.getX() < 0)
-        {
-            //o que fazer ao bater
-            ball.setX(lastposition.x);
-            ball.setY(lastposition.y);
-
-
+        if(ball.getHitbox().right > screenLimit.x){
+            ball.reverseXVelocity();
         }
 
-        
         for (Stars s : starList){
             s.update();
         }
-
         ball.update();
         blueBase.update();
         redBase.update();
-        asteroid1.update();
-        asteroid2.update();
-        asteroid3.update();
+
+        //por cada asteroide no array de asteroids
+        for (Asteroids a : asteroids){
+            a.update();
+        }
 
         //Se a bola sai da tela
-        if(ball.getY() > screenLimit.y || ball.getY() < 0){
+        if(ball.getHitbox().bottom > screenLimit.y || ball.getHitbox().top < 0){
             //game over
             gameOver = true;
         }
@@ -348,23 +292,12 @@ public class GameView extends SurfaceView implements Runnable{
                     paint);
 
             //desenha os asteroids
-            canvas.drawBitmap(
-                    asteroid1.getAsteroidBitmap(),
-                    asteroid1.getX(),
-                    asteroid1.getY(),
-                    paint);
-
-            canvas.drawBitmap(
-                    asteroid2.getAsteroidBitmap(),
-                    asteroid2.getX(),
-                    asteroid2.getY(),
-                    paint);
-
-            canvas.drawBitmap(
-                    asteroid3.getAsteroidBitmap(),
-                    asteroid3.getX(),
-                    asteroid3.getY(),
-                    paint);
+            for(Asteroids a : asteroids){
+                canvas.drawBitmap(a.getAsteroidBitmap(),
+                        a.getX(),
+                        a.getY(),
+                        paint);
+            }
 
             //texto
             if(!gameOver) {
@@ -427,15 +360,28 @@ public class GameView extends SurfaceView implements Runnable{
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             // Has the player lifted their finger up?
             case MotionEvent.ACTION_UP:
-                // Do something here
+                if (!gameOver) {
+                    blueBase.setMovementState(blueBase.STOPPED);
+                    redBase.setMovementState(redBase.STOPPED);
+                }
                 break;
             // O jogador tocou a tela¹
             case MotionEvent.ACTION_DOWN:
+
+                //se precionado o lado direito da tela
+                if(motionEvent.getX() > screenLimit.x / 2) {
+                    blueBase.setMovementState(blueBase.RIGHT);
+                    redBase.setMovementState(redBase.LEFT);
+                }else {
+                    blueBase.setMovementState(blueBase.LEFT);
+                    redBase.setMovementState(redBase.RIGHT);
+                }
                 // caso seja fim de jogo
                 if(gameOver){
                     //reinicia o jogo
                     startGame();
                 }
+
                 break;
 
         }

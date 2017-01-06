@@ -17,10 +17,22 @@ public class Base {
     private  int selectBar;
     private Rect hitbox;
 
+    //direção do movimento
+    //variaveis estaticas
+    public final int STOPPED = 0;
+    public final int LEFT = 1;
+    public final int RIGHT = 2;
+
+    //a base esta a se mecher e em qual direção
+    private int isMoving = STOPPED;
+
+    //limite de tela
+    Point screenLimit;
 
     //construtor
     public Base(Context context, int bar, Point screenLimit){
 
+        this.screenLimit = screenLimit;
         selectBar = bar;
 
         speed = 1.5f;
@@ -50,6 +62,19 @@ public class Base {
 
     public  void update(){
 
+        float lasXpos = x;
+
+        if(isMoving == LEFT){
+            x -= speed;
+        }
+        if (isMoving == RIGHT){
+            x += speed;
+        }
+
+        //impede que as barras saiam da tela
+        if (x < 0 || x + barBitmap.getWidth()> screenLimit.x){
+            x = lasXpos;
+        }
         //Refresh hit box location
         hitbox.left = (int)x;
         hitbox.top = (int)y;
@@ -76,5 +101,9 @@ public class Base {
 
     public Rect getHitbox(){  return hitbox; }
 
-
+    //setters
+    //metodo usado para alterar o estado da base.
+    public  void setMovementState(int state){
+        isMoving = state;
+    }
 }
