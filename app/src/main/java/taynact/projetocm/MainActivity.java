@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import ketai.ui.*;
 
-
 public class MainActivity extends Activity
         implements View.OnClickListener{
 

@@ -12,15 +12,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\android studio 2.1\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_97edf5af1ef63011b4a1cb4d49d4954bd4aed210\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -84,21 +75,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_4425b1e1c42c5230b25bea23a309d60d793794c2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
         <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_a72a97beece52f78dcce3ef31db96e1882e52a0d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_4425b1e1c42c5230b25bea23a309d60d793794c2\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -133,8 +124,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="ab1787d505c4acf9ab1a925bcd272edd29ff1347">
+        sha1="6a4ae51de6f698b72c083b05b5920eaa7019ad3b">
         <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_48e13def5dcf17c425465f56453e905c360396a8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\github tayna\ProjetoCoputacaoMovel\app\android-core.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3d3c9f05f1948fe01ff80a3a2edbb891f6c6741d">
+        <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\2\android-core_4669ed6cff13d8539c37889d498b3b0b1635b425\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -142,8 +142,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="fc8b3d0ac505fdeca8aa841291d4cfc2b90bc35b">
+        sha1="6c06e72268722cff48951255bf6544d1463342fc">
         <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_8bcc363de6117fb74c7dbd3f94bd9892d2f055a7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\androidstudio2.1\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_fe3071ac08971c84e11de3dfac951ff42a56aa78\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -153,6 +162,15 @@
         revision="25.0.0"
         sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
         <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_4e797af475d34f96cb521154374ed9f1bed47ca9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\github tayna\ProjetoCoputacaoMovel\app\ketai.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="11bf968e954214362d2b748c3532f49e4887cd28">
+        <dex dex="D:\github tayna\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\2\ketai_f6b70a97f5d48d79f15715118fdf212824c08c47\classes.dex" />
     </item>
 
 </items>
