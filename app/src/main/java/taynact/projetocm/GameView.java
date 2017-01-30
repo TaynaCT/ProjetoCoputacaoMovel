@@ -1,6 +1,7 @@
 package taynact.projetocm;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +12,13 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.graphics.Rect;
 import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable{
 
@@ -24,7 +32,7 @@ public class GameView extends SurfaceView implements Runnable{
     private  TheBall ball;
 
     //variaveis de pontuação
-    private int pts;
+    private int score;
     private int timeStarted;
     private int touch = 1;
 
@@ -82,7 +90,7 @@ public class GameView extends SurfaceView implements Runnable{
             asteroids[i] = new Asteroids(context, screenLimit);
         }
 
-        pts = 0;
+        score = 0;
         //pega o tempo do sistema em minisegundos
         timeStarted = (int)System.currentTimeMillis();
 
@@ -91,6 +99,7 @@ public class GameView extends SurfaceView implements Runnable{
 
     @Override
     public void run() {
+
         while (playing) {
             update();
             draw();
@@ -245,7 +254,7 @@ public class GameView extends SurfaceView implements Runnable{
         //enquanto não é game over
         if(!gameOver){
             //faz contagem dos pontos
-            pts = (int)System.currentTimeMillis() - timeStarted + pts10;
+            score = (int)System.currentTimeMillis() - timeStarted + pts10;
         }
 
     }
@@ -302,14 +311,14 @@ public class GameView extends SurfaceView implements Runnable{
                 paint.setTextAlign(Paint.Align.LEFT);
                 paint.setColor(Color.argb(255, 255, 255, 255));
                 paint.setTextSize(25);
-                canvas.drawText("PTS: " + pts, 10, 20, paint);
+                canvas.drawText("PTS: " + score, 10, 20, paint);
             } else{
                 //Quando o jogo acabar
                 paint.setTextSize(80);
                 paint.setTextAlign(Paint.Align.CENTER);
                 canvas.drawText("Game Over", screenLimit.x/2, 100, paint);
                 paint.setTextSize(25);
-                canvas.drawText("PTS: " + pts, screenLimit.x/2, 160, paint);
+                canvas.drawText("PTS: " + score, screenLimit.x/2, 160, paint);
 
                 paint.setTextSize(80);
                 canvas.drawText("Tap to Replay!", screenLimit.x/2, 350, paint);
@@ -384,5 +393,10 @@ public class GameView extends SurfaceView implements Runnable{
 
         }
         return true;
+    }
+
+
+    public int getScore(){
+        return  score;
     }
 }
