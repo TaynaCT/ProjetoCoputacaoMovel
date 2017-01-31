@@ -20,13 +20,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+
+
 public class GameView extends SurfaceView implements Runnable{
 
     private Context context;
     private GameView gameView;
 
+
     volatile boolean playing;
     Thread gameThread = null;
+
+    private Sketch oriente;
 
     //bola
     private  TheBall ball;
@@ -68,6 +73,7 @@ public class GameView extends SurfaceView implements Runnable{
     //Inicia as variaveis de jogo
     public void  startGame(){
 
+
         //numero de estrelas a gerar
         int numStars = 10;
         asteroids = new Asteroids[3];
@@ -84,6 +90,7 @@ public class GameView extends SurfaceView implements Runnable{
         ball = new TheBall(context);
         blueBase = new Base(context, 0, screenLimit);
         redBase = new Base(context, 1, screenLimit);
+        oriente = new Sketch();
 
         //inicia os asteroides
         for (int i = 0; i < asteroids.length; i ++){
@@ -108,6 +115,101 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     private void update(){
+
+        if (oriente.getorientez()>0) //esquerda
+        {
+            blueBase.setMovementState(blueBase.LEFT);
+            redBase.setMovementState(redBase.RIGHT);
+            if (oriente.getorientey()>0) //aumenta velocidade
+            {
+                if (touch==1)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() * 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() * 1.5f));
+                }
+                else if(touch==0)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() / 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() / 1.5f));
+                }
+            }
+            else if (oriente.getorientey()<0) //diminui velocidade
+            {
+                if (touch==1)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() / 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() / 1.5f));
+                }
+                else if(touch==0)
+                {
+                ball.setX(ball.getX() + (ball.getxVelocity() * 1.5f));
+                ball.setY(ball.getY() + (ball.getyVelocity() * 1.5f));
+                }
+            }
+        }
+        else if (oriente.getorientez()<0) //direita
+        {
+            blueBase.setMovementState(blueBase.RIGHT);
+            redBase.setMovementState(redBase.LEFT);
+            if (oriente.getorientey()>0) //aumenta velocidade
+            {
+                if (touch==1)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() * 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() * 1.5f));
+                }
+                else if(touch==0)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() / 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() / 1.5f));
+                }
+            }
+            else if (oriente.getorientey()<0) //diminui velocidade
+            {
+                if (touch==1)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() / 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() / 1.5f));
+                }
+                else if(touch==0)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() * 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() * 1.5f));
+                }
+            }
+
+        } else
+        { //paralelo ao chão
+            blueBase.setMovementState(blueBase.STOPPED);
+            redBase.setMovementState(redBase.STOPPED);
+            if (oriente.getorientey()>0) //aumenta velocidade
+            {
+                if (touch==1)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() * 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() * 1.5f));
+                }
+                else if(touch==0)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() / 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() / 1.5f));
+                }
+            }
+            else if (oriente.getorientey()<0) //diminui velocidade
+            {
+                if (touch==1)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() / 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() / 1.5f));
+                }
+                else if(touch==0)
+                {
+                    ball.setX(ball.getX() + (ball.getxVelocity() * 1.5f));
+                    ball.setY(ball.getY() + (ball.getyVelocity() * 1.5f));
+                }
+            }
+        }
+
 
         Point lastposition = new Point((int)ball.getX(), (int)ball.getY());
         int pts10 = 0;
@@ -137,94 +239,82 @@ public class GameView extends SurfaceView implements Runnable{
             ball.reverseYVelocity();
             touch = 0;
         }
-/*
-        if(Rect.intersects  (ball.getHitbox(), asteroid1.getHitbox()))
+
+        if(Rect.intersects  (ball.getHitbox(), asteroids[0].getHitbox()))
         {
             //o que fazer ao bater
-            if  (ball.getHitbox().right == asteroid1.getHitbox().left);
+            if  (ball.getHitbox().right == asteroids[0].getHitbox().left);
             {
-
-
+                ball.reverseXVelocity();
             }
 
-            if  (ball.getHitbox().left == asteroid1.getHitbox().right);
+            if  (ball.getHitbox().left == asteroids[0].getHitbox().right);
             {
-
-
+                ball.reverseXVelocity();
             }
 
-            if  (ball.getHitbox().top == asteroid1.getHitbox().bottom);
+            if  (ball.getHitbox().top == asteroids[0].getHitbox().bottom);
             {
-
-
+                ball.reverseYVelocity();
             }
 
-            if  (ball.getHitbox().bottom == asteroid1.getHitbox().top);
+            if  (ball.getHitbox().bottom == asteroids[0].getHitbox().top);
             {
-
-
+                ball.reverseYVelocity();
             }
         }
 
-        if(Rect.intersects  (ball.getHitbox(), asteroid2.getHitbox()))
+        if(Rect.intersects  (ball.getHitbox(), asteroids[1].getHitbox()))
         {
             //o que fazer ao bater
-            if  (ball.getHitbox().right == asteroid2.getHitbox().left);
+            if  (ball.getHitbox().right == asteroids[1].getHitbox().left);
             {
-
-
+                ball.reverseXVelocity();
             }
 
-            if  (ball.getHitbox().left == asteroid2.getHitbox().right);
+            if  (ball.getHitbox().left == asteroids[1].getHitbox().right);
             {
-
-
+                ball.reverseXVelocity();
             }
 
-            if  (ball.getHitbox().top == asteroid2.getHitbox().bottom);
+            if  (ball.getHitbox().top == asteroids[1].getHitbox().bottom);
             {
-
-
+                ball.reverseYVelocity();
             }
 
-            if  (ball.getHitbox().bottom == asteroid2.getHitbox().top);
+            if  (ball.getHitbox().bottom == asteroids[1].getHitbox().top);
             {
-
-
+                ball.reverseYVelocity();
             }
 
         }
 
-        if(Rect.intersects  (ball.getHitbox(), asteroid3.getHitbox()))
+        if(Rect.intersects  (ball.getHitbox(), asteroids[2].getHitbox()))
         {
             //o que fazer ao bater
-            if  (ball.getHitbox().right == asteroid3.getHitbox().left);
+            if  (ball.getHitbox().right == asteroids[2].getHitbox().left);
             {
-
-
+                ball.reverseXVelocity();
             }
 
-            if  (ball.getHitbox().left == asteroid3.getHitbox().right);
+            if  (ball.getHitbox().left == asteroids[2].getHitbox().right);
             {
-
-
+                ball.reverseXVelocity();
             }
 
-            if  (ball.getHitbox().top == asteroid3.getHitbox().bottom);
+            if  (ball.getHitbox().top == asteroids[2].getHitbox().bottom);
             {
-
-
+                ball.reverseYVelocity();
             }
 
-            if  (ball.getHitbox().bottom == asteroid3.getHitbox().top);
+            if  (ball.getHitbox().bottom == asteroids[2].getHitbox().top);
             {
-
-
+                ball.reverseYVelocity();
             }
         }
-*/
 
-        //se a bola atingir oas lados da tela
+
+        //se a bola atingir os lados da tela
         if(ball.getHitbox().left < 0){
             ball.reverseXVelocity();
         }

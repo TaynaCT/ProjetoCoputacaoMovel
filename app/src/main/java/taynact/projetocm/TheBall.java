@@ -16,6 +16,7 @@ public class TheBall {
     private float xVelocity;
     private float yVelocity;
 
+
     private Rect hitbox;
 
     //construtor
@@ -24,6 +25,7 @@ public class TheBall {
         y = 10;
         xVelocity = 5;
         yVelocity = 5.5f;
+
 
         ball = BitmapFactory.decodeResource(context.getResources(), R.drawable.ball);
 
@@ -55,9 +57,17 @@ public class TheBall {
         return y;
     }
 
-    public void setX(int x) {  this.x = x; }
+    public float getxVelocity() {
+        return xVelocity;
+    }
 
-    public void setY(int y) {  this.y = y; }
+    public float getyVelocity() {
+        return yVelocity;
+    }
+
+    public void setX(float x) {  this.x = x; }
+
+    public void setY(float y) {  this.y = y; }
 
     public Rect getHitbox(){  return hitbox; }
 
@@ -68,6 +78,7 @@ public class TheBall {
     public  void  reverseYVelocity(){
         yVelocity = -yVelocity;
     }
+
     //gera velocidade aleatoria no caso impacto com as barras
     public void setRandomVelocity(){
         Random rand = new Random();
