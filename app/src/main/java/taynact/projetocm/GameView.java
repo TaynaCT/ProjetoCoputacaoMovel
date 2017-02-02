@@ -69,6 +69,10 @@ public class GameView extends SurfaceView implements Runnable{
 
     int AUX = -1;
 
+    //controle de frame rate
+    private final static int MAX_FPS = 30; //desired fps
+    private final static int FRAME_PERIOD = 1000 / MAX_FPS; // the frame period
+
     //construtor
     public GameView(Context context, Point screenLimit) {
         super(context);
@@ -258,6 +262,34 @@ public class GameView extends SurfaceView implements Runnable{
             touch = 0;
         }
 
+        for(Asteroids ast : asteroids){
+
+            if (Rect.intersects(ast.getHitbox(), ball.getHitbox())){
+
+                //o que fazer ao bater
+                if  (ball.getHitbox().right == ast.getHitbox().left);
+                {
+                    ball.reverseXVelocity();
+                }
+
+                if  (ball.getHitbox().left == ast.getHitbox().right);
+                {
+                    ball.reverseXVelocity();
+                }
+
+                if  (ball.getHitbox().top == ast.getHitbox().bottom);
+                {
+                    ball.reverseYVelocity();
+                }
+
+                if  (ball.getHitbox().bottom == ast.getHitbox().top);
+                {
+                    ball.reverseYVelocity();
+                }
+
+            }
+        }
+/*
         if(Rect.intersects  (ball.getHitbox(), asteroids[0].getHitbox()))
         {
             //o que fazer ao bater
@@ -331,7 +363,7 @@ public class GameView extends SurfaceView implements Runnable{
             }
         }
 
-
+*/
         //se a bola atingir os lados da tela
         if(ball.getHitbox().left < 0){
             ball.reverseXVelocity();
@@ -458,12 +490,20 @@ public class GameView extends SurfaceView implements Runnable{
     }
     private void control(){
 
+        long started = System.currentTimeMillis(); // controla o tempo de execução
+
+        float deltaTime = (System.currentTimeMillis() - started);
+        int sleepTime = (int) (FRAME_PERIOD - deltaTime);//sleepTime = tempoMax - delta -> tempo de pausa para regular o frame rate
+
         //controla o frame rate
         //pausamos o thread po 17 milisegundos(1000milisegundos/ 60(fps))
         try {
-            gameThread.sleep(17);
+            gameThread.sleep(sleepTime);
         } catch (InterruptedException e) {
         }
+
+
+
 
     }
 

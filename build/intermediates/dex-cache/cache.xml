@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="c874c01e84ae437959ec55507ca479a30304016e">
+        sha1="bc4b2e3c1cbf983532c87e61a9a10313009d923b">
         <dex dex="C:\Users\tayna\Documents\GitHub\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_40770229b6cf61fd158dbcf50a90155a145bec52\classes.dex" />
     </item>
     <item
@@ -61,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="23b82452761c5035487dff212d8ef70d6fdbd65a">
+        sha1="60197099e05fb5d0aa3200ce4cd7e24d1ebfd6a3">
         <dex dex="C:\Users\tayna\Documents\GitHub\ProjetoCoputacaoMovel\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_f32347df5f854cd8ab017d0c7f7b9febbfc3d6f2\classes.dex" />
     </item>
     <item
