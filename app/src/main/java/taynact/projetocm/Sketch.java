@@ -1,9 +1,9 @@
-package taynact.projetocm;
+/*package taynact.projetocm;
 
 /**
  * Created by jcsil on 13/10/2016.
  */
-
+/*
 import ketai.sensors.KetaiSensor;
 import ketai.ui.KetaiVibrate;
 import processing.core.PApplet;
@@ -56,3 +56,4 @@ public class Sketch extends PApplet {
     }
 
 }
+*/

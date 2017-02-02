@@ -31,7 +31,7 @@ public class GameView extends SurfaceView implements Runnable{
     volatile boolean playing;
     Thread gameThread = null;
 
-    private Sketch oriente;
+    //private Sketch oriente;
 
     //bola
     private  TheBall ball;
@@ -108,7 +108,7 @@ public class GameView extends SurfaceView implements Runnable{
         ball = new TheBall(context);
         blueBase = new Base(context, 0, screenLimit);
         redBase = new Base(context, 1, screenLimit);
-        oriente = new Sketch();
+        //oriente = new Sketch();
 
         //inicia os asteroides
         for (int i = 0; i < asteroids.length; i ++){
@@ -133,7 +133,7 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     private void update(){
-
+/*
         if (oriente.getorientez()>0) //esquerda
         {
             blueBase.setMovementState(blueBase.LEFT);
@@ -227,7 +227,7 @@ public class GameView extends SurfaceView implements Runnable{
                 }
             }
         }
-
+*/
 
         Point lastposition = new Point((int)ball.getX(), (int)ball.getY());
         int pts10 = 0;
