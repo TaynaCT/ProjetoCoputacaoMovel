@@ -60,19 +60,37 @@ public class GameView extends SurfaceView implements Runnable{
     //fim de jogo
     private  boolean gameOver;
 
+    //ranking
+    private SharedPreferences gamePrefs;
+    public static final String GAME_PREFS = "RankingFile";
+
+    //score
+    String[] savedScores;
+
+    int AUX = -1;
+
     //construtor
     public GameView(Context context, Point screenLimit) {
         super(context);
         this.context = context;
         this.screenLimit = screenLimit;
 
-        startGame();
+        //inicia o objeto do tipo SharedPreferences
+        gamePrefs = context.getSharedPreferences(GAME_PREFS, 0);
 
+        startGame();
     }
 
     //Inicia as variaveis de jogo
     public void  startGame(){
 
+        /*
+        //LIMPA SHAREPREFERENCES
+        SharedPreferences preferences = context.getSharedPreferences(GAME_PREFS, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+*/
 
         //numero de estrelas a gerar
         int numStars = 10;
@@ -347,6 +365,17 @@ public class GameView extends SurfaceView implements Runnable{
             score = (int)System.currentTimeMillis() - timeStarted + pts10;
         }
 
+        if (gameOver){
+
+            if(AUX == 0){
+                setHightScore();
+                SharedPreferences scorePref = context.getSharedPreferences(GAME_PREFS, 0);
+                savedScores = scorePref.getString("highScores","").split("\\|");
+            }
+            AUX = 1;
+
+        }
+
     }
     private void draw(){
 
@@ -412,6 +441,15 @@ public class GameView extends SurfaceView implements Runnable{
 
                 paint.setTextSize(80);
                 canvas.drawText("Tap to Replay!", screenLimit.x/2, 350, paint);
+
+                paint.setTextSize(50);
+                canvas.drawText("HIGH SCORE", screenLimit.x/2, 400, paint);
+                //StringBuilder scoreBuild = new StringBuilder("");
+                for(int i = 0; i < savedScores.length; i ++){
+                    paint.setTextSize(25);
+                    canvas.drawText(savedScores[i].toString() + "\n", screenLimit.x/2, 450 + (i*25), paint);
+                }
+
             }
             // Unlock and draw the scene
             ourHolder.unlockCanvasAndPost(canvas);
@@ -485,8 +523,57 @@ public class GameView extends SurfaceView implements Runnable{
         return true;
     }
 
+    private  void setHightScore(){
+        int exScore = score;
+        List<Score> scoreStrings = new ArrayList<Score>();
 
-    public int getScore(){
-        return  score;
+        SharedPreferences.Editor scoreEdit = gamePrefs.edit();
+        //para cada score vamor incluir no gamePrefs o score e a data
+        android.icu.text.DateFormat date = new android.icu.text.SimpleDateFormat("dd MMMM YYYY");
+        //formatação da data
+        String dateOutput = date.format(new Date());
+
+        //pega todos dados de score do gamePrefs
+        String scores = gamePrefs.getString("highScores", "");
+
+        //verifica se há algum score ja salvo
+        if(scores.length() > 0){
+            //se houver scores
+            String[] exScores = scores.split("\\|");
+
+            //cria um objeto da classse score para cada hight score separando pontuação e data por "-"
+            for(String esc : exScores){
+                String[] parts = esc.split(" - ");
+                scoreStrings.add(new Score(parts[0], Integer.parseInt(parts[1])));
+            }
+            //adiciona a nova pontuação a lista
+            Score newScore = new  Score(dateOutput,exScore);
+            scoreStrings.add(newScore);
+
+            //ordena os objetos da lista de acordo com o compareTo metodo da classe Score
+            Collections.sort(scoreStrings);
+
+            // Separa os 10 primeiros scores e adiciona em uma pipa-delimited string
+            // e então passa para o Shared Preferences
+            StringBuilder scoreBuild = new StringBuilder("");
+            for(int s=0; s<scoreStrings.size(); s++){
+                if(s>=10) break;//se passar de dez, sai do ciclo
+                if(s>0) scoreBuild.append("|");//separa os scores pelo "|"
+                scoreBuild.append(scoreStrings.get(s).getScoreText());
+            }
+
+            //passa para o Shared Preferences
+            scoreEdit.putString("highScores", scoreBuild.toString());
+            scoreEdit.commit();
+
+        }
+        else {
+            //se não
+            scoreEdit.putString("highScores", "" + dateOutput + " - " + exScore);
+            scoreEdit.commit();
+        }
+
     }
+
+
 }
