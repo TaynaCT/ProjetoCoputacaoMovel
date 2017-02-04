@@ -83,7 +83,7 @@ public class Asteroids {
         if(x < minX - asteroidBitmap.getWidth()){
 
             //caso ele saia volta a a por no outro lado da tela, e gera um novo valor random para a posição em y
-
+            reset();
         }
 
         //Refresh hit box location
