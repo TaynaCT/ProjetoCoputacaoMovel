@@ -1,6 +1,7 @@
 package taynact.projetocm;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.icu.text.DateFormat;
@@ -25,6 +26,10 @@ public  class GameActivity extends  Activity{
     protected  void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
 
+        //acessa a informação extra
+        Intent i = getIntent();
+        String playerName = i.getStringExtra("name");
+
         //objeto que pega referencias da tela
         Display display = getWindowManager().getDefaultDisplay();
 
@@ -35,7 +40,7 @@ public  class GameActivity extends  Activity{
 
         //cria instacia do gameView
         //'this' é o Context da aplicação
-        gameView = new GameView(this, size);
+        gameView = new GameView(this, size, playerName);
         //passa o gameView para o view da atividade
         setContentView(gameView);
     }

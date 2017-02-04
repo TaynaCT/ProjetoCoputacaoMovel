@@ -25,6 +25,7 @@ import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable{
 
+    private String playerName;
     private Context context;
     private GameView gameView;
 
@@ -68,8 +69,6 @@ public class GameView extends SurfaceView implements Runnable{
     //score
     String[] savedScores;
 
-
-
     int AUX = -1;
 
     //controle de frame rate
@@ -77,10 +76,12 @@ public class GameView extends SurfaceView implements Runnable{
     private final static int FRAME_PERIOD = 1000 / MAX_FPS; // the frame period
 
     //construtor
-    public GameView(Context context, Point screenLimit) {
+    public GameView(Context context, Point screenLimit, String playerName) {
         super(context);
         this.context = context;
         this.screenLimit = screenLimit;
+
+        this.playerName = playerName;
 
         //inicia o objeto do tipo SharedPreferences
         gamePrefs = context.getSharedPreferences(GAME_PREFS, 0);
@@ -238,85 +239,80 @@ public class GameView extends SurfaceView implements Runnable{
             }
         }
 */
-
-        Point lastposition = new Point((int)ball.getX(), (int)ball.getY());
         int pts10 = 0;
-        // Collision detection on new positions
-        // Before move because we are testing last frames
-        // position which has just been drawn
-        // If you are using images in excess of 100 pixels
-        // wide then increase the -100 value accordingly
-        if(Rect.intersects(blueBase.getHitbox(), ball.getHitbox()))
-        {
-            //o que fazer ao bater
-            if (touch == 0){
-                pts10 = 10;
-            }
-            ball.setRandomVelocity();
-            ball.reverseYVelocity();
-            touch = 1;
 
-        }
-        if(Rect.intersects  (redBase.getHitbox(), ball.getHitbox()))
-        {
-            //o que fazer ao bater
-            if (touch == 1){
-                pts10 = 10;
-            }
-            ball.setRandomVelocity();
-            ball.reverseYVelocity();
-            touch = 0;
-        }
+        //se a bola existir
+        // a bola só existe se estiver dentro da tela
+        if(ball != null) {
 
-        for(Asteroids ast : asteroids){
-            if (Rect.intersects(ast.getHitbox(), ball.getHitbox())){
+            Point lastposition = new Point((int) ball.getX(), (int) ball.getY());
 
+            // Collision detection on new positions
+            // Before move because we are testing last frames
+            // position which has just been drawn
+            // If you are using images in excess of 100 pixels
+            // wide then increase the -100 value accordingly
+            if (Rect.intersects(blueBase.getHitbox(), ball.getHitbox())) {
                 //o que fazer ao bater
-                if  (ball.getHitbox().right > ast.getHitbox().left && ball.getHitbox().right < ast.getHitbox().centerX())
-                {
-                    if(ball.getxVelocity()>0)
-                    {
-                        tipo = 1;
-                        Log.d("Tipo 1", "left");
-                    }
-                    ast.reset();
-                }else
-                if  (ball.getHitbox().left < ast.getHitbox().right && ball.getHitbox().left > ast.getHitbox().centerX()) {
-                    if(ball.getxVelocity()<0)
-                    {
-                        tipo = 1;
-                        Log.d("Tipo 1", "right");
-                    }
-                    ast.reset();
-                }else
-                if(ball.getHitbox().bottom > ast.getHitbox().top && ball.getHitbox().bottom < ast.getHitbox().centerY()){
-                    if(ball.getyVelocity()>0)
-                    {
-                        tipo = 2;
-                        Log.d("Tipo 2", "top");
-                    }
-                    ast.reset();
-                }else
-                if(ball.getHitbox().top < ast.getHitbox().bottom && ball.getHitbox().top > ast.getHitbox().centerY()){
-                    if(ball.getyVelocity()<0)
-                    {
-                        tipo = 2;
-                        Log.d("Tipo 2", "bottom");
-                    }
-                    ast.reset();
+                if (touch == 0) {
+                    pts10 = 10;
                 }
-
-                if(tipo==1) {
-                    ball.reverseXVelocity();
-                    ast.reset();
-                }else{
-                    ball.reverseYVelocity();
-                    ast.reset();
-
-                }
+                ball.setRandomVelocity();
+                ball.reverseYVelocity();
+                touch = 1;
 
             }
-        }
+            if (Rect.intersects(redBase.getHitbox(), ball.getHitbox())) {
+                //o que fazer ao bater
+                if (touch == 1) {
+                    pts10 = 10;
+                }
+                ball.setRandomVelocity();
+                ball.reverseYVelocity();
+                touch = 0;
+            }
+
+            for (Asteroids ast : asteroids) {
+                if (Rect.intersects(ast.getHitbox(), ball.getHitbox())) {
+
+                    //o que fazer ao bater
+                    if (ball.getHitbox().right > ast.getHitbox().left && ball.getHitbox().right < ast.getHitbox().centerX()) {
+                        if (ball.getxVelocity() > 0) {
+                            tipo = 1;
+                            Log.d("Tipo 1", "left");
+                        }
+                        ast.reset();
+                    } else if (ball.getHitbox().left < ast.getHitbox().right && ball.getHitbox().left > ast.getHitbox().centerX()) {
+                        if (ball.getxVelocity() < 0) {
+                            tipo = 1;
+                            Log.d("Tipo 1", "right");
+                        }
+                        ast.reset();
+                    } else if (ball.getHitbox().bottom > ast.getHitbox().top && ball.getHitbox().bottom < ast.getHitbox().centerY()) {
+                        if (ball.getyVelocity() > 0) {
+                            tipo = 2;
+                            Log.d("Tipo 2", "top");
+                        }
+                        ast.reset();
+                    } else if (ball.getHitbox().top < ast.getHitbox().bottom && ball.getHitbox().top > ast.getHitbox().centerY()) {
+                        if (ball.getyVelocity() < 0) {
+                            tipo = 2;
+                            Log.d("Tipo 2", "bottom");
+                        }
+                        ast.reset();
+                    }
+
+                    if (tipo == 1) {
+                        ball.reverseXVelocity();
+                        ast.reset();
+                    } else {
+                        ball.reverseYVelocity();
+                        ast.reset();
+
+                    }
+
+                }
+            }
 /*
         if(Rect.intersects  (ball.getHitbox(), asteroids[0].getHitbox()))
         {
@@ -392,47 +388,51 @@ public class GameView extends SurfaceView implements Runnable{
         }
 
 */
-        //se a bola atingir os lados da tela
-        if(ball.getHitbox().left < 0){
-            ball.reverseXVelocity();
+            //se a bola atingir os lados da tela
+            if (ball.getHitbox().left < 0) {
+                ball.reverseXVelocity();
+            }
+
+            if (ball.getHitbox().right > screenLimit.x) {
+                ball.reverseXVelocity();
+            }
+
+            ball.update();
+            blueBase.update();
+            redBase.update();
+
+            //Se a bola sai da tela
+            if (ball.getHitbox().bottom > screenLimit.y || ball.getHitbox().top < 0) {
+                //game over
+                gameOver = true;
+                ball = null;
+                AUX = 0;
+            }
         }
 
-        if(ball.getHitbox().right > screenLimit.x){
-            ball.reverseXVelocity();
-        }
-
-        for (Stars s : starList){
+        for (Stars s : starList) {
             s.update();
         }
-        ball.update();
-        blueBase.update();
-        redBase.update();
 
         //por cada asteroide no array de asteroids
-        for (Asteroids a : asteroids){
+        for (Asteroids a : asteroids) {
             a.update();
-        }
-
-        //Se a bola sai da tela
-        if(ball.getHitbox().bottom > screenLimit.y || ball.getHitbox().top < 0){
-            //game over
-            gameOver = true;
         }
 
         //enquanto não é game over
         if(!gameOver){
             //faz contagem dos pontos
             score = (int)System.currentTimeMillis() - timeStarted + pts10;
-        }
 
-        if (gameOver){
+        }else {
 
-            if(AUX == 0){
+            // é fim de jogo
+            if (AUX == 0) {
                 setHightScore();
                 SharedPreferences scorePref = context.getSharedPreferences(GAME_PREFS, 0);
-                savedScores = scorePref.getString("highScores","").split("\\|");
+                savedScores = scorePref.getString("highScores", "").split("\\|");
             }
-            AUX = 1;
+            AUX = -1;
 
         }
 
@@ -456,12 +456,14 @@ public class GameView extends SurfaceView implements Runnable{
                         paint);
             }
 
-            //desenha a bola
-            canvas.drawBitmap(
-                    ball.getBall(),
-                    ball.getX(),
-                    ball.getY(),
-                    paint);
+            if(ball != null){
+                //desenha a bola
+                canvas.drawBitmap(
+                        ball.getBall(),
+                        ball.getX(),
+                        ball.getY(),
+                        paint);
+            }
 
             //desenha a barra azul
             canvas.drawBitmap(
@@ -490,14 +492,15 @@ public class GameView extends SurfaceView implements Runnable{
                 paint.setTextAlign(Paint.Align.LEFT);
                 paint.setColor(Color.argb(255, 255, 255, 255));
                 paint.setTextSize(25);
-                canvas.drawText("PTS: " + score, 10, 20, paint);
+                canvas.drawText("SCORE: " + score, 10, 20, paint);
             } else{
                 //Quando o jogo acabar
                 paint.setTextSize(80);
                 paint.setTextAlign(Paint.Align.CENTER);
                 canvas.drawText("Game Over", screenLimit.x/2, 100, paint);
-                paint.setTextSize(25);
-                canvas.drawText("PTS: " + score, screenLimit.x/2, 160, paint);
+
+                paint.setTextSize(40);
+                canvas.drawText(playerName.toString() + " - " + score, screenLimit.x/2, 200, paint);
 
                 paint.setTextSize(80);
                 canvas.drawText("Tap to Replay!", screenLimit.x/2, 350, paint);
@@ -618,7 +621,8 @@ public class GameView extends SurfaceView implements Runnable{
                 scoreStrings.add(new Score(parts[0], Integer.parseInt(parts[1])));
             }
             //adiciona a nova pontuação a lista
-            Score newScore = new  Score(dateOutput,exScore);
+            //Score newScore = new  Score(dateOutput,exScore);
+            Score newScore = new  Score(playerName.toString(),exScore);
             scoreStrings.add(newScore);
 
             //ordena os objetos da lista de acordo com o compareTo metodo da classe Score
@@ -640,7 +644,8 @@ public class GameView extends SurfaceView implements Runnable{
         }
         else {
             //se não
-            scoreEdit.putString("highScores", "" + dateOutput + " - " + exScore);
+            //scoreEdit.putString("highScores", "" + dateOutput + " - " + exScore);
+            scoreEdit.putString("highScores", "" + playerName.toString() + " - " + exScore);
             scoreEdit.commit();
         }
 
