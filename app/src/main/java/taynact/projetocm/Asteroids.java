@@ -63,7 +63,7 @@ public class Asteroids {
         minX = 0;
         minY = 0;
 
-        speed = generator.nextInt(6) + 10;
+        speed = generator.nextInt(6) + 5;
 
         //coloca o asteroide na posição inicial, que é o limite direito da tela
         x = screenLimit.x;
@@ -83,10 +83,7 @@ public class Asteroids {
         if(x < minX - asteroidBitmap.getWidth()){
 
             //caso ele saia volta a a por no outro lado da tela, e gera um novo valor random para a posição em y
-            Random generator = new Random();
-            speed = generator.nextInt(10)+10;
-            x = maxX;
-            y = generator.nextInt((maxY - asteroidBitmap.getHeight()*2) - (maxY/6)) + (maxY/6);
+
         }
 
         //Refresh hit box location
@@ -96,6 +93,13 @@ public class Asteroids {
         hitbox.bottom = (int)y + asteroidBitmap.getHeight();
     }
 
+    public void reset()
+    {
+        Random generator = new Random();
+        speed = generator.nextInt(10)+10;
+        x = maxX;
+        y = generator.nextInt((maxY - asteroidBitmap.getHeight()*2) - (maxY/6)) + (maxY/6);
+    }
     //Getters
     public Bitmap getAsteroidBitmap() {
         return asteroidBitmap;

@@ -34,6 +34,7 @@ public class TheBall {
     }
 
     public  void update(){
+
         x += xVelocity;
         y += yVelocity;
 
@@ -61,9 +62,7 @@ public class TheBall {
         return xVelocity;
     }
 
-    public float getyVelocity() {
-        return yVelocity;
-    }
+    public float getyVelocity() {return yVelocity; }
 
     public void setX(float x) {  this.x = x; }
 
@@ -72,11 +71,11 @@ public class TheBall {
     public Rect getHitbox(){  return hitbox; }
 
     public void reverseXVelocity(){
-        xVelocity = -xVelocity;
+        xVelocity *= -1;
     }
 
     public  void  reverseYVelocity(){
-        yVelocity = -yVelocity;
+        yVelocity *= -1;
     }
 
     //gera velocidade aleatoria no caso impacto com as barras

@@ -35,7 +35,7 @@ public class Base {
         this.screenLimit = screenLimit;
         selectBar = bar;
 
-        speed = 1.5f;
+        speed = 5f;
 
         switch (selectBar){
 

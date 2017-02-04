@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -67,6 +68,8 @@ public class GameView extends SurfaceView implements Runnable{
     //score
     String[] savedScores;
 
+
+
     int AUX = -1;
 
     //controle de frame rate
@@ -88,13 +91,14 @@ public class GameView extends SurfaceView implements Runnable{
     //Inicia as variaveis de jogo
     public void  startGame(){
 
-        /*
+
         //LIMPA SHAREPREFERENCES
+    /*
         SharedPreferences preferences = context.getSharedPreferences(GAME_PREFS, 0);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
-*/
+    */
 
         //numero de estrelas a gerar
         int numStars = 10;
@@ -135,6 +139,8 @@ public class GameView extends SurfaceView implements Runnable{
             control();
         }
     }
+
+    int tipo=1;
 
     private void update(){
 /*
@@ -263,28 +269,50 @@ public class GameView extends SurfaceView implements Runnable{
         }
 
         for(Asteroids ast : asteroids){
-
             if (Rect.intersects(ast.getHitbox(), ball.getHitbox())){
 
                 //o que fazer ao bater
-                if  (ball.getHitbox().right == ast.getHitbox().left);
+                if  (ball.getHitbox().right > ast.getHitbox().left && ball.getHitbox().right < ast.getHitbox().centerX())
                 {
+                    if(ball.getxVelocity()>0)
+                    {
+                        tipo = 1;
+                        Log.d("Tipo 1", "left");
+                    }
+                    ast.reset();
+                }else
+                if  (ball.getHitbox().left < ast.getHitbox().right && ball.getHitbox().left > ast.getHitbox().centerX()) {
+                    if(ball.getxVelocity()<0)
+                    {
+                        tipo = 1;
+                        Log.d("Tipo 1", "right");
+                    }
+                    ast.reset();
+                }else
+                if(ball.getHitbox().bottom > ast.getHitbox().top && ball.getHitbox().bottom < ast.getHitbox().centerY()){
+                    if(ball.getyVelocity()>0)
+                    {
+                        tipo = 2;
+                        Log.d("Tipo 2", "top");
+                    }
+                    ast.reset();
+                }else
+                if(ball.getHitbox().top < ast.getHitbox().bottom && ball.getHitbox().top > ast.getHitbox().centerY()){
+                    if(ball.getyVelocity()<0)
+                    {
+                        tipo = 2;
+                        Log.d("Tipo 2", "bottom");
+                    }
+                    ast.reset();
+                }
+
+                if(tipo==1) {
                     ball.reverseXVelocity();
-                }
-
-                if  (ball.getHitbox().left == ast.getHitbox().right);
-                {
-                    ball.reverseXVelocity();
-                }
-
-                if  (ball.getHitbox().top == ast.getHitbox().bottom);
-                {
+                    ast.reset();
+                }else{
                     ball.reverseYVelocity();
-                }
+                    ast.reset();
 
-                if  (ball.getHitbox().bottom == ast.getHitbox().top);
-                {
-                    ball.reverseYVelocity();
                 }
 
             }
@@ -477,6 +505,9 @@ public class GameView extends SurfaceView implements Runnable{
                 paint.setTextSize(50);
                 canvas.drawText("HIGH SCORE", screenLimit.x/2, 400, paint);
                 //StringBuilder scoreBuild = new StringBuilder("");
+
+                //if(savedScores != null)
+                savedScores[0] = ("");
                 for(int i = 0; i < savedScores.length; i ++){
                     paint.setTextSize(25);
                     canvas.drawText(savedScores[i].toString() + "\n", screenLimit.x/2, 450 + (i*25), paint);
